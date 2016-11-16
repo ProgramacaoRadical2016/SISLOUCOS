@@ -1,0 +1,81 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Bairro</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmBairro">
+         <p:panel header="Bairro">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+               
+               	<p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{bairroService.bairro.id}" />
+					
+                <p:outputLabel id="lbNome" value="Nome:" style="float: right;"/>
+                <p:inputText id="nome" size="60" value="#{bairroService.bairro.nome}" required="true" requiredMessage="Campo [Nome] é obrigatório." />
+				
+			  <p:outputLabel id="lbCidade" value="Cidade:"  style="float: right;"/>           
+                <p:selectOneMenu id="slcCidades" value="#{bairroService.bairro.cidade}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Cidade] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{bairroService.listarCidades()}" var="cid" itemLabel="#{cid.nome}" itemValue="#{cid}" />
+                </p:selectOneMenu>	
+
+            </p:panelGrid>  
+            				
+
+					<p:commandButton value="Salvar" action="#{bairroService.salvarRegistro(bairroService.bairro)}"  update="frmBairro, messages" />
+          
+             <p:spacer height="10"/>
+         <p:dataTable id="dtBairros" emptyMessage="Nenhum registro encontrado." value="#{bairroService.listar()}"  var="bairro" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Bairros" />
+                </f:facet>
+                
+               <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{bairroService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{bairroService.selecionarRegistro(bairro)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{bairroService.remove(bairro)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                <p:column width="50">
+						<f:facet name="header">
+							<h:outputText value="Código"  style="float: left;"/>
+						</f:facet>
+						<h:outputText value="#{bairro.id}" />
+					</p:column>
+			
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{bairro.nome}"/>
+                </p:column> 
+                  
+                  <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cidade"  style="float: left;"/>
+                    </f:facet>
+                    <h:outputText value="#{bairro.cidade.nome}"/>
+                </p:column>          
+                
+                </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

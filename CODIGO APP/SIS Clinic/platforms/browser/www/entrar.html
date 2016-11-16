@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+    <link rel="stylesheet" type="text/css" href="css/ionic.min.css" />
+    <title>SIS Clinic</title>
+    <script type="text/javascript">
+        var url = window.location.pathname;var filename = url.substring(url.lastIndexOf('/')+1);
+        if(localStorage.entrar=="true" && filename == 'entrar.html'){window.location.href = "index.html";}
+        else if(localStorage.entrar=="false" && filename != 'entrar.html'){window.location.href = "entrar.html";}
+    </script>
+</head>
+<body> 
+    <div class="padding" style="margin-top:2em; text-align:center; width:100%;">
+        <img src="img/logo.png" alt="">
+    </div>
+    <div class="padding">
+        <label class="item-input"> 
+            <input type="text" placeholder="Login" id="login">
+        </label>
+        <label class="item-input"> 
+            <input type="password" placeholder="Senha" id="senha">
+        </label>
+        <label class="item-input"> 
+            <a href="redefinir.html" class="button button-clear button-royal">Esqueceu a senha ?</a>
+        </label>
+        <label class="item-input">
+            <button class="button button-block button-positive" style="width:48%; margin-right:2%;" id="entrar">Entrar</button>           
+            <a class="button button-block button-positive" style="width:49%" href="cadastro.html">Cadastrar</a>
+        </label>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jq.js"></script>
+    <script type="text/javascript" src="js/auth.js"></script>
+</body>
+
+</html>

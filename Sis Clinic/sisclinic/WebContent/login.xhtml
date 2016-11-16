@@ -1,0 +1,35 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css"  name="login.css" />
+</h:head>
+<h:body>
+    <div class="caixa">
+        <div class="linha">
+            <h:graphicImage library="images" name="logo_inicial.png"/>
+        </div>
+
+        <h:form id="formLogin" styleClass="formulario" >
+            <div class="login">
+                
+                <div class="linha">
+                   <p:inputText id="nomeUsuario" styleClass="campo" value="#{usuarioService.usuario.login}" placeholder="Usuário" />
+                </div>
+
+                <div class="linha">
+                   <p:password id="senha" styleClass="campo" value="#{usuarioService.usuario.senha}" placeholder="senha" />
+                </div>
+                
+                <div class="linha">
+                    <p:commandButton value="Entrar" styleClass="botao" icon="ui-icon-star" action="#{usuarioService.logar}" ajax="false"/>
+                </div>
+
+            </div>
+       	</h:form>
+
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,64 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Especialidade</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmEspecialidade">
+         <p:panel header="Especialidade">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+               
+               	<p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{especialidadeService.especialidade.id}" />
+					
+                <p:outputLabel id="lbNome" value="Descrição:" style="float: right;"/>
+                <p:inputText id="nome" size="60" value="#{especialidadeService.especialidade.descricao}" required="true" requiredMessage="Campo [Descrição] é obrigatório." />
+				
+            </p:panelGrid>  
+             <p:commandButton value="Salvar" action="#{especialidadeService.salvarRegistro(especialidadeService.especialidade)}"  update="frmEspecialidade, messages" />
+          
+             <p:spacer height="10"/>
+         <p:dataTable id="dtEspecialidade" emptyMessage="Nenhum registro encontrado." value="#{especialidadeService.listar()}"  var="especialidade" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Especialidade" />
+                </f:facet>
+                
+               <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{especialidadeService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{especialidadeService.selecionarRegistro(especialidade)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{especialidadeService.remove(especialidade)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                <p:column width="50">
+						<f:facet name="header">
+							<h:outputText value="Código"  style="float: left;"/>
+						</f:facet>
+						<h:outputText value="#{especialidade.id}" />
+					</p:column>
+			
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descrição"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{especialidade.descricao}"/>
+                </p:column> 
+                  
+                 </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

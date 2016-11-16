@@ -1,0 +1,65 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Convenio</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmConvenio">
+         <p:panel header="Convenio">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+              
+              
+                <p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{convenioService.convenio.id}"  />
+               
+                <p:outputLabel id="lbDescricao" value="Descrição:" style="float: right;"/>
+                <p:inputText id="descricao" size="60" value="#{convenioService.convenio.descricao}" required="true" requiredMessage="Campo [Descrição] é obrigatório." />
+                
+             
+            </p:panelGrid> 
+               <p:commandButton value="Salvar" action="#{convenioService.salvarRegistro(convenioService.convenio)}"  update="frmConvenio, messages" />
+          		 
+             <p:spacer height="10"/>
+         <p:dataTable id="dtCategorias" emptyMessage="Nenhum registro encontrado." value="#{convenioService.listar()}"  var="convenio" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Convenio" />
+                </f:facet>
+                
+                <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                     <f:ajax event="click" render="@form" listener="#{convenioService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{convenioService.selecionarRegistro(convenio)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{convenioService.remove(convenio)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                  <p:column width="70">
+                    <f:facet name="header">
+                        <h:outputText value="Código"/>
+                    </f:facet>
+                   <h:outputText value="#{convenio.id}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descrição"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{convenio.descricao}"/>
+                </p:column> 
+                </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

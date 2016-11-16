@@ -1,0 +1,64 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Sexo</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmSexo">
+         <p:panel header="Sexo">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+               
+               <p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{sexoService.sexo.id}" />
+               
+                <p:outputLabel id="lbDescricao" value="Descricao:" style="float: right;"/>
+                <p:inputText id="descricao" size="60" value="#{sexoService.sexo.descricao}"  required="true" requiredMessage="Campo [Descrição] é obrigatório." />
+            </p:panelGrid>  
+                 <p:commandButton value="Salvar" action="#{sexoService.salvarRegistro(sexoService.sexo)}"  update="frmSexo, messages" />
+          		
+             <p:spacer height="10"/>
+         <p:dataTable id="dtSexos" emptyMessage="Nenhum registro encontrado." value="#{sexoService.listar()}"  var="sexo" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Sexo" />
+                </f:facet>
+                
+                  <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{sexoService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{sexoService.selecionarRegistro(sexo)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{sexoService.remove(sexo)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                  <p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{sexo.id}" />
+					</p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{sexo.descricao}"/>
+                </p:column>   
+                            
+             
+               </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,87 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Usuario</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmUsuario">
+         <p:panel header="Usuario">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+               
+                 <p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{usuarioService.usuario.id}" />
+               
+                <p:outputLabel id="lbNome" value="Nome:" style="float: right;"/>
+                <p:inputText id="nome" size="60" value="#{usuarioService.usuario.nome}" required="true" requiredMessage="Campo [Nome] é obrigatório." />
+                
+                <p:outputLabel id="lbEmail" value="Email:" style="float: right;"/>
+                <p:inputText id="email" size="60" value="#{usuarioService.usuario.email}" />
+                
+                <p:outputLabel id="lbLogin" value="Login:" style="float: right;"/>
+                <p:inputText id="login" size="60" value="#{usuarioService.usuario.login}" required="true" requiredMessage="Campo [Login] é obrigatório." />
+                
+                 <p:outputLabel id="lbSigla" value="Senha:"  style="float: right;"/>
+                <p:password  id="senha" size="60" value="#{usuarioService.usuario.senha}" required="true" requiredMessage="Campo [Senha] é obrigatório." />
+       </p:panelGrid>  
+                <p:commandButton value="Salvar" action="#{usuarioService.salvarRegistro(usuarioService.usuario)}"  update="frmUsuario messages" />
+          		
+          
+             <p:spacer height="10"/>
+         <p:dataTable id="dtUsuarios" emptyMessage="Nenhum registro encontrado." value="#{usuarioService.listar()}"  var="usuario" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Usuario" />
+                </f:facet>
+                
+                   <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{usuarioService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{usuarioService.selecionarRegistro(usuario)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{usuarioService.remove(usuario)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+
+					<p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{usuario.id}" />
+					</p:column>
+
+					<p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Login" style="float: left;" />
+						</f:facet>
+						<h:outputText value="#{usuario.login}" />
+					</p:column>
+
+					<p:column width="250">
+						<f:facet name="header">
+							<h:outputText value="Nome" style="float: left;" />
+						</f:facet>
+						<h:outputText value="#{usuario.nome}" />
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="E-mail" style="float: left;" />
+						</f:facet>
+						<h:outputText value="#{usuario.email}" />
+					</p:column>
+				</p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

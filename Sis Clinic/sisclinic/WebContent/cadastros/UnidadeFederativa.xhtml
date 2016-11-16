@@ -1,0 +1,74 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Unidade Federativa</ui:define>
+  <ui:define name="corpo">
+    
+    <h:form id="frmUnidadeFederativa">
+         <p:panel header="Unidade Federativa">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+
+  				 <p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{unidadeFederativaService.unidadeFederativa.id}"/>
+
+                <p:outputLabel id="lbNome" value="Nome:" style="float: right;"/>
+                <p:inputText id="nome" size="60" value="#{unidadeFederativaService.unidadeFederativa.nome}" required="true" requiredMessage="Campo [Nome] é obrigatório." />
+                
+                 <p:outputLabel id="lbSigla" value="Sigla:"  style="float: right;"/>
+                <p:inputText id="sigla" size="60" value="#{unidadeFederativaService.unidadeFederativa.sigla}" required="true" requiredMessage="Campo [Sigla] é obrigatório." />
+     
+            </p:panelGrid> 
+            <p:commandButton value="Salvar" action="#{unidadeFederativaService.salvarRegistro(unidadeFederativaService.unidadeFederativa)}"  update="frmUnidadeFederativa, messages" />
+          		 
+             <p:spacer height="10"/>
+         <p:dataTable id="dtUnidades" emptyMessage="Nenhum registro encontrado." value="#{unidadeFederativaService.listar()}"  var="unidadeF" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Unidades Federativa" />
+                </f:facet>
+                <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{unidadeFederativaService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{unidadeFederativaService.selecionarRegistro(unidadeF)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{unidadeFederativaService.remove(unidadeF)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                
+                 <p:column width="70">
+                    <f:facet name="header">
+                        <h:outputText value="Código"/>
+                    </f:facet>
+                   <h:outputText value="#{unidadeF.id}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{unidadeF.nome}"/>
+                </p:column> 
+                  
+                  <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Sigla"  style="float: left;"/>
+                    </f:facet>
+                    <h:outputText value="#{unidadeF.sigla}"/>
+                </p:column>
+                </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

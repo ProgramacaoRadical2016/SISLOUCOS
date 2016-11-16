@@ -1,0 +1,114 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Medicamento Preço</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmMedicamentoPreco">
+         <p:panel header="Medicamento Preco">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+                                
+                 <p:outputLabel id="lbMedicamento" value="Medicamento"/>           
+               	 <p:selectOneMenu id="slcMedicamento" value="#{medicamentoValorService.medicamentoValor.medicamento}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Medicamento] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{medicamentoService.listar()}" var="medicamento" itemLabel="#{medicamento.descricao}" itemValue="#{medicamento}" />
+                </p:selectOneMenu>	
+                
+                <p:outputLabel id="lbFornecedor" value="Fornecedor"/>           
+               	 <p:selectOneMenu id="slcFornecedor" value="#{medicamentoValorService.medicamentoValor.fornecedor}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Fornecedor] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{fornecedorService.listar()}" var="fornecedor" itemLabel="#{fornecedor.pessoa.nome}" itemValue="#{fornecedor}" />
+                </p:selectOneMenu>	
+                
+                <p:outputLabel value="Data Inicial..:"/>
+				<p:calendar value="#{medicamentoValorService.medicamentoValor.dataInicial}"	placeholder="date" pattern="dd/MM/yyyy" mask="true" />
+			 
+			 	<p:outputLabel value="Data Final..:"/>
+				<p:calendar value="#{medicamentoValorService.medicamentoValor.dataFinal}"	placeholder="date" pattern="dd/MM/yyyy" mask="true" />
+                
+                <p:outputLabel value="Valor"   style="float: right;"/> 
+	          <p:inputText id="valor" size="10" maxlength="10" styleClass="moeda" value="#{medicamentoValorService.medicamentoValor.valor}">
+		        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+		     </p:inputText>
+		     
+            </p:panelGrid>  
+                 <p:commandButton value="Salvar" action="#{medicamentoValorService.salvarRegistro(medicamentoValorService.medicamentoValor)}"  update="frmMedicamentoPreco, messages" />
+          		
+             <p:spacer height="10"/>
+         <p:dataTable id="dtMedicamentoValores" emptyMessage="Nenhum registro encontrado." value="#{medicamentoValorService.listar()}"  var="medicamentoValor" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Preços de Medicamento" />
+                </f:facet>
+                
+                  <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{medicamentoValorService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{medicamentoValorService.selecionarRegistro(medicamentoValor)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{medicamentoValorService.remove(medicamentoValor)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                  <p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{medicamentoValor.id}" />
+					</p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{medicamentoValor.medicamento.descricao}"/>
+                </p:column>  
+    
+                
+                           <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Data Inicial"  style="float: left;"/>
+                    </f:facet>
+                   
+                    <h:outputText value="#{medicamentoValor.dataInicial}">
+              		 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+            		</h:outputText>
+                </p:column>  
+                
+                
+  					<p:column > 
+ 					<f:facet name="header">
+                        <h:outputText value="Data Final"  style="float: left;"/>
+                    </f:facet>
+                   
+                     <h:outputText value="#{medicamentoValor.dataFinal}">
+              		 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+            		</h:outputText>
+                </p:column> 
+                
+                            
+                 <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Valor"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{medicamentoValor.valor}"/>
+                </p:column>       
+                            
+             
+               </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

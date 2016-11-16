@@ -1,0 +1,140 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Empresa</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmEmpresa">
+         <p:panel header="Empresa">
+            <p:messages id="messages" />
+            
+            	<p:panelGrid columns="4" style="width:500px;" >
+			    <p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{empresaService.empresa.id}" />
+			
+			    <p:outputLabel id="lbNome" value="Nome:"/>
+			    <p:inputText id="nome" style="width:250px;" value="#{empresaService.empresa.pessoa.nome}" required="true" requiredMessage="Campo [Nome] é obrigatório." />
+
+				<p:outputLabel id="lbCpf" value="CPF:" />
+                 <p:inputMask mask="999.999.999-99" id="cpf" value="#{empresaService.empresa.pessoa.cpf}"/>  
+           
+              
+                
+                 <p:outputLabel id="lbTelefone" value="Telefone:" />
+                 <p:inputMask mask="(999)9999-9999" id="telefone" style="width:150px;"  value="#{empresaService.empresa.pessoa.telefone}"/>     
+          
+                 
+                 <p:outputLabel id="lbCelular" value="Celular:"/>
+                 <p:inputMask mask="(999)9999-9999" id="celular" style="width:150px;"   value="#{empresaService.empresa.pessoa.celular}"/>  
+                     
+                
+                 <p:outputLabel id="lbEmail" value="Email:"/>
+                 <p:inputText id="email" style="width:250px;" value="#{empresaService.empresa.pessoa.email}"/>	
+			</p:panelGrid>
+
+			<p:panelGrid columns="6"  style="width:800px;">
+			
+			    <p:outputLabel id="lbCep" value="CEP:"/>
+                <p:inputMask mask="99999-999" id="cep"  value="#{empresaService.empresa.pessoa.cep}" style="width:100px;"/>  
+		
+                
+          	    <p:outputLabel id="lbUnidade" value="UF:"/>           
+                <p:selectOneMenu id="slcUnidades" value="#{empresaService.empresa.pessoa.unidadeFederativa}"  converter="conversorObjeto" required="true"
+                    requiredMessage="Campo [Unidade Federativa] é obrigatório." style="width:150px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarUnidades()}" var="uni" itemLabel="#{uni.nome}" itemValue="#{uni}" />
+                </p:selectOneMenu>	
+                
+                <p:outputLabel id="lbCidade" value="Cidade:"/>           
+                <p:selectOneMenu id="slcCidades" value="#{empresaService.empresa.pessoa.cidade}"  converter="conversorObjeto" required="true"
+                     requiredMessage="Campo [Cidade] é obrigatório." style="width:150px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarCidades()}" var="cid" itemLabel="#{cid.nome}" itemValue="#{cid}" />
+                </p:selectOneMenu>
+                
+                
+                <p:outputLabel id="lbBairro" value="Bairro: "/>           
+                <p:selectOneMenu id="slcBairros" value="#{empresaService.empresa.pessoa.bairro}"  converter="conversorObjeto" required="true"
+                      requiredMessage="Campo [Bairro] é obrigatório." style="width:150px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarBairros()}" var="bairr" itemLabel="#{bairr.nome}" itemValue="#{bairr}" />
+                </p:selectOneMenu>
+                
+               <p:outputLabel id="lbTipoLogradouro" value="Tipo:"/>           
+                <p:selectOneMenu id="slcTipoLogradouros" value="#{empresaService.empresa.pessoa.tipoLogradouro}"  converter="conversorObjeto" required="true"
+                      requiredMessage="Campo [Tipo de Logradouro] é obrigatório." style="width:150px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarTipoLogradouros()}" var="tipoLograd" itemLabel="#{tipoLograd.descricao}" itemValue="#{tipoLograd}" />
+                </p:selectOneMenu>
+			
+			</p:panelGrid>   
+             
+                 <p:commandButton value="Salvar" action="#{empresaService.salvarRegistro(empresaService.empresa)}"  update="frmEmpresa, messages" />
+          		
+             <p:spacer height="10"/>
+         <p:dataTable id="dtEmpresas" emptyMessage="Nenhum registro encontrado." value="#{empresaService.listar()}"  var="empresa" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Empresas" />
+                </f:facet>
+                
+                  <p:column width="20">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{empresaService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{empresaService.selecionarRegistro(empresa)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{empresaService.remove(empresa)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                  <p:column width="30">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{empresa.id}" />
+					</p:column>
+                
+                <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{empresa.pessoa.nome}"/>
+                </p:column>   
+                
+                      
+                    <p:column width="40">
+                    <f:facet name="header">
+                        <h:outputText value="CPF" style="float: left;" />
+                    </f:facet>
+                   <h:outputText value="#{empresa.pessoa.cpf}"/>
+                </p:column> 
+                                  
+                  <p:column width="50">
+                    <f:facet name="header">
+                        <h:outputText value="Telefone" style="float: left;" />
+                    </f:facet>
+                    <h:outputText value="#{empresa.pessoa.telefone}"/>
+                </p:column>  
+                
+                <p:column width="50">
+                    <f:facet name="header">
+                        <h:outputText value="Celular" style="float: left;" />
+                    </f:facet>
+                    <h:outputText value="#{empresa.pessoa.celular}"/>
+                </p:column>
+                            
+             
+               </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,47 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Agendamento de Consulta</ui:define>
+  <ui:define name="corpo">
+   <p:outputLabel  value="Agendamento de Consulta"/>
+    <h:form id="frmAgendamentoConsulta">
+            <p:messages id="messages" />
+               <p:commandButton icon="ui-icon-plus" title="Nome" action="#{agendamentoConsultaService.abrirAgendamentoConsultaDialogo}"	process="@this" update="@none">
+					
+				</p:commandButton>
+         		
+             <p:spacer height="10"/>
+         <p:dataTable id="dtAgendamentoConsultas" emptyMessage="Nenhum registro encontrado." value="#{agendamentoConsultaService.listar()}"  var="agendamentoConsulta" style="text-align: center; font-weight: bold;" paginator="false" rows="5">
+                  <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                      <p:commandButton icon="ui-icon-check" style="width:20px; height:20px;" title="Nome" action="#{agendamentoConsultaService.abrirConfirmacaoAtendimentoDialogo(agendamentoConsulta.id)}"	process="@this" update="@none"/>  
+                      <f:ajax event="click" render="@form"  listener="#{agendamentoConsultaService.remove(agendamentoConsulta)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                  <p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{agendamentoConsulta.id}" />
+					</p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{agendamentoConsulta.paciente.pessoa.nome}"/>
+                </p:column>   
+               </p:dataTable>
+                     
+    </h:form>
+    </ui:define>
+</ui:composition>
+

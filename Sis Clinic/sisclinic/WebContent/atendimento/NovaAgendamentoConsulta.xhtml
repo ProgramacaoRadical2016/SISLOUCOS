@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Novo Agendamento</title>
+	
+<!-- 	<h:outputStylesheet library="algaworks" name="estilo.css" /> -->
+</h:head>
+<h:body>
+
+	<h:form id="frmAgendamentoConsulta">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+            
+             <h:outputLabel id="lbEmpresa" value="Empresa " for="empresa" style="float: right;"/>           
+                <h:selectOneMenu id="slcEmpresa" value="#{agendamentoConsultaService.agendamentoConsulta.empresa}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Empresa] é obrigatório.">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{agendamentoConsultaService.listarEmpresa()}" var="empresa" itemLabel="#{empresa.pessoa.nome}" itemValue="#{empresa}" />
+                </h:selectOneMenu>
+               
+              <p:outputLabel id="lbConvenio" value="Convenio: "/>           
+               	 <p:selectOneMenu id="slcSexos" value="#{agendamentoConsultaService.agendamentoConsulta.convenio}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Convenio] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{atendimentoService.listarConvenios()}" var="convenio" itemLabel="#{convenio.descricao}" itemValue="#{convenio}" />
+                </p:selectOneMenu>
+                
+                
+                 <p:outputLabel id="lbEspecialidade" value="Especialidade: "/>           
+               	 <p:selectOneMenu id="slcEspecialidades" value="#{agendamentoConsultaService.agendamentoConsulta.especialidade}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Especialidade] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{agendamentoConsultaService.listarEspecialidades()}" var="especialidade" itemLabel="#{especialidade.descricao}" itemValue="#{especialidade}" />
+                </p:selectOneMenu>	
+                
+                  <p:outputLabel id="lbPaciente" value="Paciente: "/>           
+               	 <p:selectOneMenu id="slcPacientes" value="#{agendamentoConsultaService.agendamentoConsulta.paciente}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Paciente] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{agendamentoConsultaService.listarPacientes()}" var="paciente" itemLabel="#{paciente.pessoa.nome}" itemValue="#{paciente}" />
+                </p:selectOneMenu>
+                       
+            </p:panelGrid>  
+  			 <p:commandButton value="Salvar" action="#{agendamentoConsultaService.salvarRegistro(agendamentoConsultaService.agendamentoConsulta)}"  update="frmAgendamentoConsulta, messages" />
+            		
+              
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,79 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Situação</ui:define>
+  <ui:define name="corpo">
+    
+    <h:form id="frmSituacao">
+         <p:panel header="Situação">
+            <p:messages id="messages" />
+            <h:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+
+                <h:outputLabel id="lbDescricao" value="Descrição:" style="float: right;"/>
+                <p:inputText id="descricao" size="60" value="#{situacaoService.situacao.descricao}" required="true" requiredMessage="Campo [Descrição] é obrigatório." />
+
+                <p:commandButton value="Adicionar" action="#{situacaoService.save()}"  update="frmSituacao, messages" />
+          		 <p:commandButton value="Alterar" action="#{situacaoService.alterar(situacaoService.situacao)}"  update="frmSituacao, messages" />
+            </h:panelGrid>  
+             <p:spacer height="10"/>
+         <p:dataTable id="dtUnidades" emptyMessage="Nenhum registro encontrado." value="#{situacaoService.listar()}"  var="situacao" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Situação" />
+                </f:facet>
+                 <p:column width="70">
+                    <f:facet name="header">
+                        <h:outputText value="Código"/>
+                    </f:facet>
+                   <h:outputText value="#{situacao.id}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descrição"/>
+                    </f:facet>
+                   <h:outputText value="#{situacao.descricao}"/>
+                </p:column> 
+                  
+ 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Remover"/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{situacaoService.remove(situacao)}">
+                        <h:commandLink value="Remover" />
+                    </f:ajax>
+                </p:column>
+                
+                 <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Remover"/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{situacaoService.selecionarRegistro(situacao)}">
+                        <h:commandLink value="Selecionar" />
+                    </f:ajax>
+                </p:column>
+                <p:column style="width:10%">  
+                    <h:panelGroup layout="horizontal">  
+                        <p:commandButton  id="btEditar" icon="ui-icon-pencil" 
+                        actionListener="#{situacaoService.selecionarRegistro(situacao)}"
+                         title="Editar">  
+                        </p:commandButton>  
+<!--                         <p:commandButton id="btRemover" icon="ui-icon-trash"   -->
+<!--                             title="Remover"  actionListener="#{unidadeFederativaService.remove(unidadeF)}" update=":frmUnidadeFederativa" process="@this"  onclick="confirmation.show()" >   -->
+<!--                         </p:commandButton>  -->
+<!--                         <p:commandButton action="#{unidadeFederativaService.onCancel}" icon="ui-icon-trash"  onclick="confirmation.show()" >                              -->
+<!--                             <f:param value="#{unidadeF.id}" name="usuId" />     -->
+<!--                         </p:commandButton>  -->
+                    </h:panelGroup>  
+                </p:column>
+               
+                </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

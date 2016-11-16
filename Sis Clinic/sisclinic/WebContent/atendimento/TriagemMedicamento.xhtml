@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Triagem Medicamento</title>
+	
+<!-- 	<h:outputStylesheet library="algaworks" name="estilo.css" /> -->
+</h:head>
+<h:body>
+
+	<h:form id="frmTriagemMedicamento">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">  
+            
+             <p:outputLabel id="lbTriagem" value="Triagem"/>           
+               	 <p:selectOneMenu id="slcTriagem" value="#{triagemMedicamentoService.triagemMedicamento.triagem}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Triagem] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{triagemMedicamentoService.listarTriagens()}" var="triagem" itemLabel="#{triagem.id}" itemValue="#{triagem}" />
+                </p:selectOneMenu>	
+                                    
+                 <p:outputLabel id="lbMedicamento" value="Medicamento"/>           
+               	 <p:selectOneMenu id="slcMedicamento" value="#{triagemMedicamentoService.triagemMedicamento.medicamento}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Medicamento] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{medicamentoService.listar()}" var="medicamento" itemLabel="#{medicamento.descricao}" itemValue="#{medicamento}" />
+                </p:selectOneMenu>	
+                
+                <p:outputLabel value="Quantidade"   style="float: right;"/> 
+	          <p:inputText id="quantidade" size="10" maxlength="10" styleClass="moeda" value="#{triagemMedicamentoService.triagemMedicamento.quantidade}">
+		        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+		     </p:inputText>
+                        
+            </p:panelGrid>  
+  			 <p:commandButton value="Salvar" action="#{triagemMedicamentoService.salvarRegistro(triagemMedicamentoService.triagemMedicamento)}"  update="frmTriagemMedicamento, messages" />
+            		
+              
+	</h:form>
+
+</h:body>
+</html>

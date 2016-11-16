@@ -1,0 +1,84 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Endereço</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmEndereco">
+         <p:panel header="Endereço">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+
+                <p:outputLabel id="lbCep" value="CEP:" for="cep"  style="float: right;" />
+                <p:inputMask mask="99999-999" id="cep"  value="#{enderecoService.endereco.cep}" converterMessage="Campo de cpf é Numérico.">  
+                </p:inputMask>
+                
+          	  <p:outputLabel id="lbUnidade" value="UF:"  style="float: right;"/>           
+                <p:selectOneMenu id="slcUnidades" converter="conversorObjeto" required="true"  style="width:150px;"
+                                requiredMessage="Campo [Unidade Federativa] é obrigatório.">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarUnidades()}" var="uni" itemLabel="#{uni.nome}" itemValue="#{uni}" />
+                </p:selectOneMenu>	
+                
+                  <p:outputLabel id="lbCidade" value="Cidade:" style="float: right;"/>           
+                <p:selectOneMenu id="slcCidades" converter="conversorObjeto" required="true"  style="width:150px;"
+                                requiredMessage="Campo [Cidade] é obrigatório.">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarCidades()}" var="cid" itemLabel="#{cid.nome}" itemValue="#{cid}" />
+                </p:selectOneMenu>
+                                
+                <p:outputLabel id="lbBairro" value="Bairro: " style="float: right;"/>           
+                <p:selectOneMenu id="slcBairros"  converter="conversorObjeto" required="true"  style="width:150px;"
+                                requiredMessage="Campo [Bairro] é obrigatório.">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarBairros()}" var="bairr" itemLabel="#{bairr.nome}" itemValue="#{bairr}" />
+                </p:selectOneMenu>
+                
+               <p:outputLabel id="lbTipoLogradouro" value="Tipo:"  style="float: right;"/>           
+                <p:selectOneMenu id="slcTipoLogradouros" value="#{pessoaService.pessoa.tipoLogradouro}"   style="width:150px;"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Tipo de Logradouro] é obrigatório.">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{pessoaService.listarTipoLogradouros()}" var="tipoLograd" itemLabel="#{tipoLograd.descricao}" itemValue="#{tipoLograd}" />
+                </p:selectOneMenu>
+                
+                  <p:outputLabel id="lbLogradouro" value="Logradouro:" style="float: right;"/>
+                <p:inputText id="logradouro" size="60" value="#{enderecoService.endereco.logradouro.nome}" required="true" requiredMessage="Campo [Logradouro] é obrigatório." />
+				
+				
+            </p:panelGrid>  
+            <p:commandButton value="Adicionar" action="#{enderecoService.save()}"  update="frmEndereco, messages" />
+          		<p:commandButton value="Alterar" action="#{enderecoService.alterar(enderecoService.endereco)}"   update="frmEndereco, messages" />
+             <p:spacer height="10"/>
+        	 <p:dataTable id="dtEnderecos" emptyMessage="Nenhum registro encontrado." value="#{enderecoService.listar()}"  var="endereco" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Endereços" />
+                </f:facet>
+                 <p:column width="50">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                     <f:ajax event="click" render="@form" listener="#{enderecoService.selecionarRegistro(endereco)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{enderecoService.remove(endereco)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"/>
+                    </f:facet>
+                   <h:outputText value="#{endereco.logradouro.nome}"/>
+                </p:column> 
+                  
+
+                </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Novo Atendimento</title>
+</h:head>
+<h:body>
+
+	<h:form id="frmTriagem">
+	<div style="margin-top: 5px; margin-bottom: 20px">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">	
+               
+                <p:outputLabel id="lbAtendimento" value="Atendimento "/>           
+               	 <p:selectOneMenu id="slcAtendimento" value="#{triagemService.triagem.atendimento}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Profissional] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{triagemService.listarAtendimentos()}" var="atendimento" itemLabel="#{atendimento.paciente.pessoa.nome}" itemValue="#{atendimento}" />
+                </p:selectOneMenu>         
+            		
+              <p:outputLabel id="lbProfissional" value="Profissional: "/>           
+               	 <p:selectOneMenu id="slcProfissionais" value="#{triagemService.triagem.profissional}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Profissional] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{triagemService.listarProfissionais()}" var="profissional" itemLabel="#{profissional.pessoa.nome}" itemValue="#{profissional}" />
+                </p:selectOneMenu>
+                                   
+                 <p:outputLabel id="lbPressao" value="PA:"/>
+			    <p:inputText id="pa" style="width:250px;" value="#{triagemService.triagem.pressao}" required="true"/>
+			    
+			    
+			    <p:outputLabel id="lbTemperatura" value="Temperatura"/>
+			    <p:inputText id="temperatura" style="width:250px;" value="#{triagemService.triagem.temperatura}" required="true"/>
+			    
+			     <p:outputLabel id="lbPeso" value="Peso"/>
+			    <p:inputText id="peso" style="width:250px;" value="#{triagemService.triagem.peso}" required="true"/>
+			    
+			     <p:outputLabel id="lbAltura" value="Altura"/>
+			    <p:inputText id="altura" style="width:250px;" value="#{triagemService.triagem.altura}" required="true"/>
+			    
+			      <p:outputLabel id="lbQueixa" value="Queixa e Historio da Molestia Atual"/>
+			    <p:inputTextarea id="queixa" style="width:250px;" value="#{triagemService.triagem.queixa}" required="true"/>
+
+            </p:panelGrid>  
+  			 <p:commandButton value="Salvar" action="#{triagemService.salvarRegistro(triagemService.triagem)}"  update="messages" />
+  			 
+     </div>   
+     
+     	  <p:commandButton icon="ui-icon-plus" title="Medicamento" action="#{triagemMedicamentoService.abrirTriagemMedicamentoDialogo(triagemService.triagem.id)}"	process="@this" update="@none"/>
+    	<p:dataTable value="#{triagemMedicamentoService.medicamentosGridTriagem(triagemService.triagem)}" var="triagemMedicamento" 		emptyMessage="Nenhum Medicamento Aplicacado" rows="10"
+    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+    		
+    		<p:column headerText="Código" style="text-align: center; width: 50px">
+    			<h:outputText value="#{triagemMedicamento.id}" />
+    		</p:column>
+    		<p:column  width="200" headerText="Medicamento">
+    			<h:outputText value="#{triagemMedicamento.medicamento.descricao}" />
+    		</p:column>    		
+    		
+    			<p:column width="100" headerText="Quantidade">
+    			<h:outputText value="#{triagemMedicamento.quantidade}" />
+    		</p:column>  
+    	</p:dataTable>		
+              
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,109 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Procedimento Preço</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmProcedimentoPreco">
+         <p:panel header="Procedimento Preco">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+                                
+                 <p:outputLabel id="lbProcedimento" value="Procedimento"/>           
+               	 <p:selectOneMenu id="slcProcedimento" value="#{procedimentoValorService.procedimentoValor.procedimento}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Procedimento] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{procedimentoService.listar()}" var="procedimento" itemLabel="#{procedimento.descricao}" itemValue="#{procedimento}" />
+                </p:selectOneMenu>	
+                
+                <p:outputLabel value="Data Inicial..:"/>
+				<p:calendar value="#{procedimentoValorService.procedimentoValor.dataInicial}"	placeholder="date" pattern="dd/MM/yyyy" mask="true" />
+			 
+			 	<p:outputLabel value="Data Final..:"/>
+				<p:calendar value="#{procedimentoValorService.procedimentoValor.dataFinal}"	placeholder="date" pattern="dd/MM/yyyy" mask="true" />
+                
+                <p:outputLabel value="Valor"   style="float: right;"/> 
+	          <p:inputText id="valor" size="10" maxlength="10" styleClass="moeda" value="#{procedimentoValorService.procedimentoValor.valor}">
+		        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+		     </p:inputText>
+		     
+            </p:panelGrid>  
+                 <p:commandButton value="Salvar" action="#{procedimentoValorService.salvarRegistro(procedimentoValorService.procedimentoValor)}"  update="frmProcedimentoPreco, messages" />
+          		
+             <p:spacer height="10"/>
+         <p:dataTable id="dtProcedimentoValores" emptyMessage="Nenhum registro encontrado." value="#{procedimentoValorService.listar()}"  var="procedimentoValor" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Preços de Procedimento" />
+                </f:facet>
+                
+                  <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{procedimentoValorService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{procedimentoValorService.selecionarRegistro(procedimentoValor)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{procedimentoValorService.remove(procedimentoValor)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                  <p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{procedimentoValor.id}" />
+					</p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{procedimentoValor.procedimento.descricao}"/>
+                </p:column>  
+                
+             
+                            
+               <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Data Inicial"  style="float: left;"/>
+                    </f:facet>
+                   
+                    <h:outputText value="#{procedimentoValor.dataInicial}">
+              		 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+            		</h:outputText>
+                </p:column>  
+                
+                
+  					<p:column > 
+ 					<f:facet name="header">
+                        <h:outputText value="Data Final"  style="float: left;"/>
+                    </f:facet>
+                   
+                     <h:outputText value="#{procedimentoValor.dataFinal}">
+              		 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+            		</h:outputText>
+                </p:column>    
+                
+                    <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Valor"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{procedimentoValor.valor}"/>
+                </p:column>    
+                            
+                              
+                            
+             
+               </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

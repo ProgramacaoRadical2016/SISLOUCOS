@@ -1,0 +1,64 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Medicamento</ui:define>
+  <ui:define name="corpo">
+    <h:form id="frmMedicamento">
+         <p:panel header="Medicamento">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+               
+               <p:outputLabel id="lbId" value="Código:" style="float: right;" />
+				<p:inputText id="id" style="width:60px;" value="#{medicamentoService.medicamento.id}" />
+               
+                <p:outputLabel id="lbDescricao" value="Descricao:" style="float: right;"/>
+                <p:inputText id="descricao" size="60" value="#{medicamentoService.medicamento.descricao}"  required="true" requiredMessage="Campo [Descrição] é obrigatório." />
+            </p:panelGrid>  
+                 <p:commandButton value="Salvar" action="#{medicamentoService.salvarRegistro(medicamentoService.medicamento)}"  update="frmMedicamento, messages" />
+          		
+             <p:spacer height="10"/>
+         <p:dataTable id="dtMedicamentos" emptyMessage="Nenhum registro encontrado." value="#{medicamentoService.listar()}"  var="medicamento" style="text-align: center; font-weight: bold;" paginator="true" rows="5">
+                <f:facet name="header">
+                    <h:outputText value="Registro de Medicamentos" />
+                </f:facet>
+                
+                  <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{medicamentoService.novoRegistro()}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-folder-open"/>
+                    </f:ajax>
+                     <f:ajax event="click" render="@form" listener="#{medicamentoService.selecionarRegistro(medicamento)}">
+                        <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check"/>
+                    </f:ajax>
+                    <f:ajax event="click" render="@form" listener="#{medicamentoService.remove(medicamento)}">
+                        <p:commandButton style="width:20px; height:20px;"  icon="ui-icon-pencil" />
+                    </f:ajax>
+                </p:column>
+                
+                  <p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{medicamento.id}" />
+					</p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{medicamento.descricao}"/>
+                </p:column>   
+                            
+             
+               </p:dataTable>
+                      
+       </p:panel>
+    </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relBairro" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f8d49efc-fee1-4c51-a0b6-4ae84b155d0c">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="81"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="valorUnitario" class="java.lang.Double">
+		<fieldDescription><![CDATA[valorUnitario]]></fieldDescription>
+	</field>
+	<field name="valorTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[valorTotal]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.lang.Double">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<field name="nomePaciente" class="java.lang.String">
+		<fieldDescription><![CDATA[nomePaciente]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<variable name="valorTotal_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valorTotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<image>
+				<reportElement uuid="d1bd12f4-0daf-4e39-b8ae-ab65a53e3bc3" x="0" y="6" width="103" height="51"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="58d97855-1cca-46bc-9d28-eda38b8ec645" x="103" y="11" width="452" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagamento de Consulta Paciente]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="8a5e79d1-d020-4525-959d-5eb976311306" x="0" y="57" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b7d48812-17f1-454a-bb40-8620927b4a3a" x="0" y="0" width="68" height="13"/>
+				<textElement/>
+				<text><![CDATA[Paciente :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c6c0ff21-e3bd-474e-bddc-1c898993257f" x="68" y="0" width="487" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nomePaciente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="05079bc6-a2a7-4351-87a5-fe9d06a3ff15" x="0" y="23" width="316" height="13"/>
+				<textElement/>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b21ec82c-e6b6-4d55-9e54-cdf11bae1968" x="316" y="23" width="77" height="13"/>
+				<textElement/>
+				<text><![CDATA[Valor Unitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f455d00d-069d-43cd-86af-f37ae9bc0e0b" x="393" y="23" width="74" height="13"/>
+				<textElement/>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a906249b-34fe-4afb-9be5-642b8ae56300" x="467" y="23" width="88" height="13"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="62b96a4c-efd5-442b-b965-be5f52e4df40" x="0" y="35" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement uuid="21c4ccec-bae9-442d-95dc-09566ef0aacd" x="0" y="0" width="316" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b6b6e490-6518-4c21-923a-bd762a3de8fc" x="467" y="0" width="88" height="13"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{valorTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4b99a45a-4879-4c7a-9b2b-98e7efd4fa45" x="316" y="0" width="77" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{valorUnitario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="60254fb1-9659-4d9a-9bc7-7c055d654e5d" x="393" y="0" width="77" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<textField pattern="###0.00;(###0.00)">
+				<reportElement uuid="541acb33-7a63-449f-9721-d8097232192e" x="467" y="0" width="88" height="20"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{valorTotal_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0766801e-788e-4e91-8db0-580e00377308" x="430" y="0" width="37" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="a09fe4ec-a437-409f-b0dd-1c97acb16825" x="0" y="0" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+    <link rel="stylesheet" type="text/css" href="css/ionic.min.css" />
+    <script src="js/combo.js"></script>
+    <title>SIS Clinic</title>
+</head>
+<body>
+    <div class="bar bar-header">
+        <h1 class="title">CRIAR CONTA</h1>
+        <a href="entrar.html" class="button button-royal">Entrar</a>
+    </div>
+    <div class="padding" style="margin-top:45px;">
+        <label class="item-input"> 
+            <input type="text" placeholder="Nome" id="usuario_nome">
+        </label>
+        <label class="item-input"> 
+            <input type="email" placeholder="E-mail" id="usuario_email">
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="Login" id="usuario_login">
+        </label>
+        <label class="item-input"> 
+            <input type="password" placeholder="Senha" id="usuario_senha">
+        </label>
+        <label class="item-input">  
+            <select id="listaSexo" class="selecione" name="pessoa_sexo"> 
+            </select>
+        </label>
+        <label class="item-input"> 
+            <input type="date" placeholder="Data Nascimento" id="pessoa_data_nascimento">
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="CPF" id="pessoa_cpf">
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="Telefone" id="pessoa_telefone">
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="Celular" id="pessoa_celular">
+        </label>
+        <label class="item-input">  
+            <select id="listaEstado" class="selecione" name="listaEstado"> 
+            </select>
+        </label>
+        <label class="item-input">  
+            <select id="listaCidade" class="selecione" name="pessoa_cidade"> 
+            </select>
+        </label>
+        <label class="item-input">  
+            <select id="listaBairro" class="selecione" name="pessoa_bairro"> 
+            </select>
+        </label>
+        <label class="item-input">  
+            <select id="listaTipoLogradouro" class="selecione" name="pessoa_tipo_logradouro"> 
+            </select>
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="Endereço" id="pessoa_logradouro">
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="Número" id="pessoa_numero">
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="Complemento" id="pessoa_complemento">
+        </label>
+        <label class="item-input"> 
+            <input type="text" placeholder="CEP" id="pessoa_cep">
+        </label>
+
+        <label class="item-input">
+            <button class="button button-block button-positive" id="cadastrar">CRIAR CONTA</button>
+        </label>
+
+        
+        
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jq.js"></script>
+    <script type="text/javascript" src="js/auth.js"></script>
+</body>
+
+</html>

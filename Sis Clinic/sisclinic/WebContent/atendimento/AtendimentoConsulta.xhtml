@@ -1,0 +1,42 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Consulta</ui:define>
+  <ui:define name="corpo">
+    <p:outputLabel  value="Atendimento Consulta"/>
+    <h:form id="frmAtendimentoConsulta">
+            <p:messages id="messages" />
+
+         		
+             <p:spacer height="10"/>
+         <p:dataTable id="dtAtendimentosConsulta" emptyMessage="Nenhum registro encontrado." value="#{atendimentoService.listarAtendimentoConsulta()}"  var="atendimento" style="text-align: center; font-weight: bold;" paginator="false" rows="5">
+                  <p:column width="80">
+                    <f:facet name="header">
+                        <h:outputText/>
+                    </f:facet>                    
+                     <p:commandButton  style="width:20px; height:20px;"  icon="ui-icon-check" title="Consulta" action="#{atendimentoService.abrirConsultaDialogo(atendimento.id)}"	process="@this" update="@none"/>  
+                </p:column>
+                
+                  <p:column width="70">
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{atendimento.id}" />
+					</p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nome"  style="float: left;"/>
+                    </f:facet>
+                   <h:outputText value="#{atendimento.paciente.pessoa.nome}"/>
+                </p:column>   
+               </p:dataTable>
+                     
+    </h:form>
+    </ui:define>
+</ui:composition>
+

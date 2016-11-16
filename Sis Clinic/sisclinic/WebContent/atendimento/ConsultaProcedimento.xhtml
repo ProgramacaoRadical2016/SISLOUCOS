@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Consulta Procedimento</title>
+
+</h:head>
+<h:body>
+
+	<h:form id="frmConsultaProcedimento">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+            
+             <p:outputLabel id="lbConsulta" value="Consulta"/>           
+               	 <p:selectOneMenu id="slcConsulta" value="#{consultaProcedimentoService.consultaProcedimento.consulta}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Consulta] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{consultaService.listar()}" var="consulta" itemLabel="#{consulta.id}" itemValue="#{consulta}" />
+                </p:selectOneMenu>
+                          
+                 <p:outputLabel id="lbProcedimento" value="Procedimento"/>           
+               	 <p:selectOneMenu id="slcProcedimento" value="#{consultaProcedimentoService.consultaProcedimento.procedimento}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Procedimento] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{procedimentoService.listar()}" var="procedimento" itemLabel="#{procedimento.descricao}" itemValue="#{procedimento}" />
+                </p:selectOneMenu>	
+                
+                <p:outputLabel value="Quantidade"   style="float: right;"/> 
+	          <p:inputText id="quantidade" size="10" maxlength="10" styleClass="moeda" value="#{consultaProcedimentoService.consultaProcedimento.quantidade}">
+		        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+		     </p:inputText>
+                        
+            </p:panelGrid>  
+  			 <p:commandButton value="Salvar" action="#{consultaProcedimentoService.salvarRegistro(consultaProcedimentoService.consultaProcedimento)}"  update="frmConsultaProcedimento, messages" />
+            		
+              
+	</h:form>
+
+</h:body>
+</html>

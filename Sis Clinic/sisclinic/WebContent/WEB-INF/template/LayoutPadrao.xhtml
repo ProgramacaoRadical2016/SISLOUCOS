@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Context-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="titulo">Sistema de Gerenciamento de Clínica</ui:insert></title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+	 <h:outputScript library="js" name="jquery.maskMoney.js"/>
+</h:head>
+
+<h:body>
+        <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
+			<f:facet name="complete">
+				<h:outputText value=""/>
+			</f:facet>
+		</p:ajaxStatus>
+	<header>
+		<div style="float: left">
+				<h:link outcome="/home">
+				    <h:graphicImage library="images" name="logo.png"/>
+			</h:link>
+		</div>
+		<div style="float: right; margin-right: 110px">
+			<span
+				style="float: left; height: 30px; line-height: 30px; margin-right: 60px; color: color: #074962 !important;" >
+				Olá usuario! </span>
+			<h:form style="display: inline-block">
+				<p:menubar styleClass="menu-sistema">
+					<p:submenu label="Cadastros">
+					    <p:menuitem value="Pessoa"  outcome="/cadastros/Pessoa"/>
+						<p:menuitem value="Profissional" outcome="/cadastros/Profissional" />
+						<p:menuitem value="Fornecedor" outcome="/cadastros/Fornecedor" />
+						<p:menuitem value="Empresa" outcome="/cadastros/Empresa" />
+						<p:menuitem value="Usuario"  outcome="/cadastros/Usuario"/>
+					    <p:menuitem value="Sexo"  outcome="/cadastros/Sexo"/>
+						<p:separator />
+						<p:menuitem value="Unidade Federativa" outcome="/cadastros/UnidadeFederativa" />
+						<p:menuitem value="Cidade"  outcome="/cadastros/Cidade" />
+						<p:menuitem value="Bairro" outcome="/cadastros/Bairro" />
+						<p:menuitem value="Tipo de Logradouro" outcome="/cadastros/TipoLogradouro" />		
+					</p:submenu>
+						
+					<p:submenu label="Clínica">
+						<p:menuitem value="Paciente" outcome="/cadastros/Paciente" />
+						<p:menuitem value="Procedimento" outcome="/cadastros/Procedimento" />
+						<p:menuitem value="Medicamento" outcome="/cadastros/Medicamento" />
+						<p:menuitem value="Especialidade" outcome="/cadastros/Especialidade" />
+						<p:menuitem value="Convênio" outcome="/cadastros/Convenio" />
+					</p:submenu>
+					
+					<p:submenu label="Atendimento">
+					
+						<p:menuitem value="Agendamento Consulta" outcome="/atendimento/AgendamentoConsulta" />
+						<p:menuitem value="Atendimento" outcome="/atendimento/Atendimento" />
+						<p:menuitem value="Triagem" outcome="/atendimento/AtendimentoTriagem" />
+						<p:menuitem value="Consulta" outcome="/atendimento/AtendimentoConsulta" />
+					</p:submenu>
+					
+					<p:submenu label="Financeiro">
+						<p:menuitem value="Preço Procedimento" outcome="/financeiro/ProcedimentoPreco" />
+						<p:menuitem value="Preço Medicamento" outcome="/financeiro/MedicamentoValor" />
+				
+					</p:submenu>
+					<p:menuitem value="Sair" outcome="/login"/>
+				</p:menubar>
+			</h:form>
+		</div>
+
+		<div style="clear: both"></div>
+
+	</header>
+</h:body>
+
+<div id="conteudo">
+	<ui:insert name="corpo" />
+</div>
+
+<p:separator style="marg-top: 20px" />
+
+<footer>Sistema de Gerenciamento de Clinica</footer>
+
+      <script>
+			function configurarMoeda() {
+				$(".moeda").maskMoney({ decimal: ",", thousands: ".", allowZero: true });
+			}
+			
+			$(document).ready(function() {
+				configurarMoeda();
+			});
+		</script>
+</html>

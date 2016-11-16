@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Consulta</title>
+</h:head>
+<h:body>
+
+	<h:form id="frmConsulta">
+		<div style="margin-top: 5px; margin-bottom: 20px">
+            <p:messages id="messages" />
+            <p:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+               
+                  <p:outputLabel id="lbAtendimento" value="Atendimento "/>           
+               	 <p:selectOneMenu id="slcAtendimento" value="#{consultaService.consulta.atendimento}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Atendimento] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{consultaService.listarAtendimentos()}" var="atendimento" itemLabel="#{atendimento.paciente.pessoa.nome}" itemValue="#{atendimento}" />
+                </p:selectOneMenu>   
+               
+              <p:outputLabel id="lbProfissional" value="Profissional: "/>           
+               	 <p:selectOneMenu id="slcProfissionais" value="#{consultaService.consulta.profissional}"  converter="conversorObjeto" required="true"
+                                requiredMessage="Campo [Profissional] é obrigatório." style="width:250px;">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{consultaService.listarProfissionais()}" var="profissional" itemLabel="#{profissional.pessoa.nome}" itemValue="#{profissional}" />
+                </p:selectOneMenu>
+                
+                 <p:outputLabel id="lbFicha" value="Ficha"/>
+			    <p:inputTextarea id="ficha" style="width:250px;" value="#{consultaService.consulta.informacao}" required="true"/>
+			     
+                 <p:outputLabel id="lbExame" value="Exame"/>
+			    <p:inputTextarea id="exame" style="width:250px;" value="#{consultaService.consulta.exame}" required="true"/>
+			    
+            </p:panelGrid>  
+  			 <p:commandButton value="Salvar" action="#{consultaService.salvarRegistro(consultaService.consulta)}"  update="frmConsulta, messages" />     
+	     </div> 
+	     
+	    <p:commandButton icon="ui-icon-search" title="Procedimento" action="#{consultaProcedimentoService.abrirConsultaProcedimenotDialogo(consultaService.consulta.id)}"	process="@this" update="@none"/>
+    	
+    	<p:dataTable value="#{consultaProcedimentoService.procedimentoGridCosulta(consultaService.consulta)}" var="consultaProcedimento" 		emptyMessage="Nenhum Procedimento Aplicacado" rows="10"
+    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+    		
+    		<p:column headerText="Código" style="text-align: center; width: 60px">
+    			<h:outputText value="#{consultaProcedimento.id}" />
+    		</p:column>
+    		<p:column width="200" headerText="Procedimento">
+    			<h:outputText value="#{consultaProcedimento.procedimento.descricao}" />
+    		</p:column>    		
+    		
+    			<p:column width="100" headerText="Quantidade">
+    			<h:outputText value="#{consultaProcedimento.quantidade}" />
+    		</p:column>  
+    	</p:dataTable>	
+	</h:form>
+
+</h:body>
+</html>
